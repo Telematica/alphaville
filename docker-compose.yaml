@@ -1,0 +1,52 @@
+version: '3.6'
+
+x-shared-environment: &commonEnv
+    REDIS_HOST: "cache"
+    REDIS_PORT: 6379
+    POSTGRES_USER: "postgres"
+    POSTGRES_PASSWORD: "postgres"
+    POSTGRES_PORT: 5432
+    POSTGRES_HOST: "rdbms_vales"
+    POSTGRES_DB: "vales_dylk"
+
+services:
+    eastern_sea:
+        container_name: 'eastern_sea'
+        build:
+          context: './DOS/office-ui'
+          args:
+            NODE_ENV: 'production'
+            REACT_APP_HOST_API: 'http://localhost:8080/api/v1'
+            REACT_APP_HOST_AUTH: 'http://localhost:10090/v1'
+        ports:
+          - '8080:8080'
+        networks:
+          - operational_network
+    neon_nights:
+        container_name: 'neon_nights'
+        build: './DOS/api-vales'
+        ports:
+          - '10080:10080'
+        environment: *commonEnv
+        networks:
+          - operational_network
+    rdbms_vales:
+        container_name: 'rdbms_vales'
+        image: 'debezium/postgres'
+        ports:
+          - '5432:5432'
+        environment: *commonEnv
+        volumes:
+          - serv_vales_pg_data:/var/lib/postgresql/data
+        networks:
+          - operational_network
+
+
+networks:
+    operational_network:
+        name: operational_network
+        driver: bridge
+
+
+volumes:
+    serv_vales_pg_data:

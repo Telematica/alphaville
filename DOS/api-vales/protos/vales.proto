@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package dylk;
+
+// -------------------------------------------------------------------------
+// The Vales service definition.
+service Vales {
+  rpc AlterUser (UserDataRequest) returns (AlterUserResponse) {}
+}
+
+
+// -------------------------------------------------------------------------
+// The request message containing the User data
+message UserDataRequest {
+  int32 userId     = 1;
+  string username  = 2;
+  string passwd    = 3;
+  int32 roleId     = 4;
+  bool disabled    = 5;
+  string firstName = 6;
+  string lastName  = 7;
+}
+
+// The response message containing the quotation's create/edit operation results
+message AlterUserResponse {
+  int32 returnCode     = 1;
+  string returnMessage = 2;
+}

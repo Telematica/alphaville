@@ -1,0 +1,7 @@
+#!/bin/sh -e
+
+RDBMS_CONTAINER="rdbms_vales"
+
+docker-compose run \
+--rm -v $(pwd)/DOS/scripts:/scripts -v $(pwd)/DOS/migrations:/migrations \
+$RDBMS_CONTAINER /scripts/create_schema.sh
