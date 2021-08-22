@@ -8,6 +8,8 @@ ARG REACT_APP_HOST_AUTH
 ENV APP_DIR=/app
 WORKDIR $APP_DIR
 
+ENV NODE_OPTIONS=--max_old_space_size=8192
+
 COPY . .
 
 RUN yarn global add react-scripts
